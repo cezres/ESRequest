@@ -80,7 +80,7 @@
 - (void)HTTPRequestWithMethod:(NSString *)method URLString:(NSString *)URLString Parameters:(id)parameters Delegate:(id<ESRequestManagerDelegate>)delegate; {
     
     if ([method isEqualToString:@"GET"]) {
-        [self.HTTPSessionManager GET:URLString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        [self.HTTPSessionManager GET:URLString parameters:parameters progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             //
             [delegate networkCompleted:self responseObject:responseObject error:nil];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -89,7 +89,7 @@
         }];
     }
     else if ([method isEqualToString:@"POST"]) {
-        [self.HTTPSessionManager POST:URLString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        [self.HTTPSessionManager POST:URLString parameters:parameters progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             //
             [delegate networkCompleted:self responseObject:responseObject error:NULL];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -103,60 +103,31 @@
 - (void)UploadRequestWithURLString:(NSString *)URLString Name:(NSString *)name FileName:(NSString *)fileName MimeType:(NSString *)mimeType Data:(NSData *)data Delegate:(id<ESRequestManagerDelegate>)delegate; {
     NSCParameterAssert(data);
     
-     NSMutableURLRequest *requestss = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-         [formData appendPartWithFileData:data name:name fileName:fileName mimeType:mimeType];
-     } error:nil];
+    NSMutableURLRequest *requestss = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:data name:name fileName:fileName mimeType:mimeType];
+    } error:nil];
     
-     __autoreleasing NSProgress *progress = nil;
-     NSURLSessionUploadTask *uploadTask = [self.HTTPSessionManager uploadTaskWithStreamedRequest:requestss progress:&progress completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-     if (error) {
-         NSLog(@"Error: %@", error);
-     } else {
-         NSLog(@"%@ %@", response, responseObject);
-     }
-         [delegate networkCompleted:self responseObject:responseObject error:error];
-     }];
-    
-    //    [self.KVOController observe:progress keyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
-    //        if ([object isMemberOfClass:[NSProgress class]]) {
-    //            NSProgress *_progress = object;
-    //            NSLog(@"%lld/%lld", _progress.completedUnitCount, _progress.totalUnitCount);
-    //            if ([delegate respondsToSelector:@selector(networkProgress:completedUnitCount:totalUnitCount:)]) {
-    //                [delegate networkProgress:self completedUnitCount:_progress.completedUnitCount totalUnitCount:_progress.totalUnitCount];
-    //            }
-    //        }
-    //    }];
-    
+    NSURLSessionUploadTask *uploadTask = [self.HTTPSessionManager uploadTaskWithStreamedRequest:requestss progress:^(NSProgress * _Nonnull uploadProgress) {
+        [delegate networkProgress:self completedUnitCount:uploadProgress.completedUnitCount totalUnitCount:uploadProgress.totalUnitCount];
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        [delegate networkCompleted:self responseObject:responseObject error:error];
+    }];
     [uploadTask resume];
 }
 
 - (void)DownloadRequestWithURLString:(NSString *)URLSting StorePath:(NSString *)storePath Delegate:(id<ESRequestManagerDelegate>)delegate; {
     NSURL *URL = [NSURL URLWithString:URLSting];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    __autoreleasing NSProgress *progress = nil;
-    NSURLSessionDownloadTask *downloadTask = [self.HTTPSessionManager downloadTaskWithRequest:request progress:&progress destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+    
+    NSURLSessionDownloadTask *downloadTask = [self.HTTPSessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        [delegate networkProgress:self completedUnitCount:downloadProgress.completedUnitCount totalUnitCount:downloadProgress.totalUnitCount];
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         NSURL *url = [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         return url;
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        //
-        NSData *data = [NSData dataWithContentsOfURL:filePath];
-        NSLog(@"%s", [data bytes]);
-        if ([delegate respondsToSelector:@selector(networkDownloadCompleted:filePath:error:)]) {
-            [delegate networkDownloadCompleted:self filePath:filePath error:error];
-        }
+        [delegate networkDownloadCompleted:self filePath:filePath error:error];
     }];
-    
-    //    [self.KVOController observe:progress keyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
-    //        if ([object isMemberOfClass:[NSProgress class]]) {
-    //            NSProgress *_progress = object;
-    //            NSLog(@"%lld/%lld", _progress.completedUnitCount, _progress.totalUnitCount);
-    //            if ([delegate respondsToSelector:@selector(networkProgress:completedUnitCount:totalUnitCount:)]) {
-    //                [delegate networkProgress:self completedUnitCount:_progress.completedUnitCount totalUnitCount:_progress.totalUnitCount];
-    //            }
-    //        }
-    //    }];
-    
     [downloadTask resume];
 }
 

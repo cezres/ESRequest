@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name         = 'ESRequest'
-s.version      = '0.1.1'
+s.version      = '0.1.2'
 s.summary      = 'Request.'
 s.homepage     = 'https://github.com/cezres/ESRequest'
 s.license      = { :type => 'MIT', :file => 'LICENSE' }
@@ -13,7 +13,7 @@ s.source_files = 'ESRequest'
 s.requires_arc = true
 s.public_header_files = 'ESRequest/*.h'
 
-s.dependency 'AFNetworking', '~> 2.0'
+s.dependency 'AFNetworking', '~> 3.0'
 s.dependency 'MBProgressHUD'
 
 end
