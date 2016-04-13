@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 
 s.name         = 'ESRequest'
-s.version      = '0.1.2'
+s.version      = '0.1.3'
 s.summary      = 'Request.'
 s.homepage     = 'https://github.com/cezres/ESRequest'
 s.license      = { :type => 'MIT', :file => 'LICENSE' }
-s.author       = { 'Evgeny Aleksandrov' => 'evgeny@aleksandrov.ws' }
+s.author       = { 'cezres' => 'cezres@163.com' }
 
 s.platform     = :ios, '7.0'
 s.source       = { :git => 'https://github.com/cezres/ESRequest.git', :tag => s.version }
