@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "AFHTTPSessionManager.h"
 #import "ESRequest.h"
 #import <AFNetworking/AFNetworking.h>
 

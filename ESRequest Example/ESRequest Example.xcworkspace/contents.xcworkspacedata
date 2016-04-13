@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ESRequest.xcodeproj">
+      location = "group:ESRequest Example.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ESRequest Example/ESRequest Example.xcodeproj">
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

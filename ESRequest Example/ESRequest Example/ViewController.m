@@ -2,26 +2,18 @@
 //  ViewController.m
 //  ESRequest Example
 //
-//  Created by 翟泉 on 16/4/11.
+//  Created by 翟泉 on 16/4/13.
 //  Copyright © 2016年 云之彼端. All rights reserved.
 //
 
 #import "ViewController.h"
-
-//@import ESRequest;
-
+#import "ESRequest.h"
 
 
-#import <ESRequest/ESRequest.h>
-
-
-
-
-//#import <ESRequest/ESRequest+NextPage.h>
-
-
-
-
+typedef NS_OPTIONS(NSInteger, RequestType) {
+    RequestTypePageIndex,
+    RequestTypePageProductRecommends
+};
 
 
 @interface ViewController ()
@@ -39,16 +31,13 @@
     
     NSDictionary<NSNumber*, ESRequestConfig *> *requestConfig;
     requestConfig = @{
-               @(RequestTypePageIndex): [ESRequestConfig Config:@"/v2/api/page/index/MAIN" Method:ESRequestMethodGET],
-               @(RequestTypePageProductRecommends): [ESRequestConfig Config:@"/v2/api/page/product/recommends" Method:ESRequestMethodGET],
-               };
+                      @(RequestTypePageIndex): [ESRequestConfig Config:@"/v2/api/page/index/MAIN" Method:ESRequestMethodGET],
+                      @(RequestTypePageProductRecommends): [ESRequestConfig Config:@"/v2/api/page/product/recommends" Method:ESRequestMethodGET],
+                      };
     [[ESRequestConfigManager sharedInstance] setConfigs:requestConfig];
-    
-    
     
     [[ESRequest RequestWithType:RequestTypePageIndex Parameters:nil Delegate:self] start];
 }
-
 
 #pragma mark - ESRequestDelegate
 - (void)requestCompleted:(ESRequest *)request; {
@@ -62,6 +51,7 @@
     }
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

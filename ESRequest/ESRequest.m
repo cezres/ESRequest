@@ -8,6 +8,7 @@
 
 #import "ESRequest.h"
 #import "NSString+MD5.h"
+#import "NSObject+ViewController.h"
 #import "ESRequestManager.h"
 
 @interface ESRequest ()
@@ -17,27 +18,22 @@
 
 @implementation ESRequest
 
-
-+ (void)load; {
-    NSLog(@"%s", __FUNCTION__);
-}
-
-
 #pragma mark - Init
 - (instancetype)initWithType:(NSInteger)type; {
     if (self = [super init]) {
         self.type = type;
         _config = [[ESRequestConfigManager sharedInstance] requestConfigForType:@(self.type)];
         self.hiddenHUD = YES;
+        self.hudSuperView = self.es_currentViewController.view;
     }
     return self;
 }
 
-- (void)dealloc; {
-    
-    NSLog(@"%s", __FUNCTION__);
-    
-}
+//- (void)dealloc; {
+//    
+//    NSLog(@"%s", __FUNCTION__);
+//    
+//}
 
 
 + (ESRequest *)RequestWithType:(NSInteger)type Parameters:(id)parameters Delegate:(id<ESRequestDelegate>)delegate; {

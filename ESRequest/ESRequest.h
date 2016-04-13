@@ -11,7 +11,7 @@
 #import "ESRequestCache.h"
 #import "ESRequestConfig.h"
 #import "ESRequestConfigManager.h"
-#import "MBProgressHUD.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 
 
