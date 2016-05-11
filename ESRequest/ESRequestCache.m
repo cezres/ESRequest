@@ -2,39 +2,24 @@
 //  ESRequestCache.m
 //  ESRequest
 //
-//  Created by 翟泉 on 16/4/11.
+//  Created by 翟泉 on 16/5/7.
 //  Copyright © 2016年 云之彼端. All rights reserved.
 //
 
 #import "ESRequestCache.h"
+#import "ESRequest.h"
+
+@interface ESRequestCache ()
+{
+    NSMutableDictionary *_memoryCaches;
+}
+
+@end
 
 @implementation ESRequestCache
 
-- (NSString *)storeCachePath; {
-    if (_storeCachePath == nil) {
-        NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        [fileManager changeCurrentDirectoryPath:documentsPath];
-        [fileManager createDirectoryAtPath:[NSString stringWithFormat:@"NetworkCache"] withIntermediateDirectories:YES attributes:nil error:nil];
-        _storeCachePath = [documentsPath stringByAppendingString:@"/NetworkCache"];
-    }
-    return _storeCachePath;
-}
-
-- (NSUInteger)cacheSize; {
-    __block NSUInteger size = 0;
-    [self traverseDirectoryWithPath:self.storeCachePath Block:^(NSString * _Nullable path) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSDictionary *dict = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:true];
-#pragma clang diagnostic pop
-        size += [[dict valueForKey:NSFileSize] integerValue];
-    }];
-    return size;
-}
-
-
-+ (nonnull ESRequestCache *)sharedInstance; {
++ (nonnull ESRequestCache *)sharedInstance;
+{
     static id sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -43,114 +28,116 @@
     return sharedInstance;
 }
 
-- (void)storeCachedObject:(id)object Token:(NSString *)token Group:(NSString *)group; {
-    NSData *data = [NSJSONSerialization dataWithJSONObject:object options:NSJSONWritingPrettyPrinted error:nil];
-    if (data) {
-        NSString *directoryPath = [NSString stringWithFormat:@"%@/%@", self.storeCachePath, group];
-        BOOL flag;
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        [fileManager changeCurrentDirectoryPath:self.storeCachePath];
-        if (![fileManager fileExistsAtPath:directoryPath isDirectory:&flag] || !flag) {
-            [fileManager createDirectoryAtPath:group withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        [data writeToFile:[self getFilePathForToken:token Group:group] atomically:YES];
+- (instancetype)init;
+{
+    if (self = [super init]) {
+        NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+        _diskPath = [documentsPath stringByAppendingString:@"/RequestCache"];
+        // 创建文件夹
+        [[NSFileManager defaultManager] createDirectoryAtPath:_diskPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
+    return self;
 }
 
-- (id)cacheObjectForToken:(NSString *)token Group:(NSString *)group TimeoutInterval:(NSTimeInterval)timeoutInterval; {
-    NSData *data = [NSData dataWithContentsOfFile:[self getFilePathForToken:token Group:group]];
-    if (data) {
-        return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    }
-    return nil;
+
+#pragma mark 缓存-Request
+
+- (NSString *)cachedPathForRequest:(ESRequest *)request;
+{
+    return [NSString stringWithFormat:@"%@/%ld/%@", _diskPath, request.type, request.identifier];
 }
 
-- (void)cacheObjectForToken:(NSString *)token Group:(NSString *)group TimeoutInterval:(NSTimeInterval)timeoutInterval Completed:(void (^)(id _Nullable, BOOL))completed; {
-    NSString *filePath = [self getFilePathForToken:token Group:group];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (data) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:filePath traverseLink:true];
-#pragma clang diagnostic pop
-        NSDate *fileModificationDate = [fileAttributes valueForKey:NSFileModificationDate];
-        NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:fileModificationDate];
-        completed([NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil], (timeInterval < timeoutInterval));
-    }
-    completed(NULL, NO);
+- (void)storeCachedJSONObjectForRequest:(ESRequest *)request;
+{
+    NSData *cachedData = [NSJSONSerialization dataWithJSONObject:request.responseObject options:kNilOptions error:NULL];
+    [self storeCachedData:cachedData ForPath:[self cachedPathForRequest:request]];
 }
 
-- (void)cacheObjectForToken:(NSString *)token Group:(NSString *)group TimeoutInterval:(NSTimeInterval)timeoutInterval object:(NSObject *__autoreleasing  _Nullable *)object flag:(BOOL *)flag; {
-    NSString *filePath = [self getFilePathForToken:token Group:group];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (data) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:filePath traverseLink:true];
-#pragma clang diagnostic pop
-        NSDate *fileModificationDate = [fileAttributes valueForKey:NSFileModificationDate];
-        NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:fileModificationDate];
-        *object = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        *flag = (timeInterval > timeoutInterval * 60);
+- (NSObject *)cachedJSONObjectForRequest:(ESRequest *)request IsTimeout:(BOOL *)isTimeout;
+{
+    NSData *cachedData = [self cachedDataForPath:[self cachedPathForRequest:request] TimeoutInterval:request.cacheTimeoutInterval IsTimeout:isTimeout];
+    if (cachedData) {
+        return [NSJSONSerialization JSONObjectWithData:cachedData options:kNilOptions error:NULL];
     }
     else {
-        *flag = YES;
+        return NULL;
     }
 }
 
-- (void)removeCacheObjectForToken:(NSString *)token Group:(NSString *)group; {
-    [[NSFileManager defaultManager] removeItemAtPath:[self getFilePathForToken:token Group:group] error:nil];
+- (void)removeCachedJSONObjectForRequest:(ESRequest *)request;
+{
+    [self removeCachedDataForPath:[self cachedPathForRequest:request]];
 }
 
-- (void)removeCacheObjectForGroup:(NSString *)group; {
-    [self traverseDirectoryWithPath:[NSString stringWithFormat:@"%@/%@", self.storeCachePath, group] Block:^(NSString * _Nullable path) {
-        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-    }];
+- (void)removeCachedJSONObjectForAPIType:(APIType)type;
+{
+    [self removeCachedDataForPath:[NSString stringWithFormat:@"%@/%ld", _diskPath, type]];
 }
 
-- (void)removeCacheObjectForPath:(NSString *)path; {
-    BOOL flag;
-    [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&flag];
-    if (flag) {
-        
+#pragma mark 缓存-Path
+
+- (void)storeCachedData:(NSData *)cachedData ForPath:(NSString *)path;
+{
+    if (cachedData == NULL) {
+        [self removeCachedDataForPath:path];
+        return;
     }
-}
-
-- (void)removeAllCache; {
-    [self traverseDirectoryWithPath:self.storeCachePath Block:^(NSString * _Nullable path) {
-        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-    }];
-}
-
-#pragma mark - Tool
-
-- (NSString *)getFilePathForToken:(NSString *)token Group:(NSString *)group; {
-    if (group) {
-        return [NSString stringWithFormat:@"%@/%@/%@", self.storeCachePath, group, token];
-    }
-    return [NSString stringWithFormat:@"%@/%@", self.storeCachePath, token];
-}
-
-- (void)traverseDirectoryWithPath:(NSString *)path Block:(void (^)(NSString *path))block; {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *files = [fileManager contentsOfDirectoryAtPath:path error:nil];
     
-    if ([files count] > 0) {
-        for (NSString *name in files) {
-            NSString *namePath = [NSString stringWithFormat:@"%@/%@", path, name];
-            BOOL flag = YES;
-            [fileManager fileExistsAtPath:namePath isDirectory:&flag];
-            if (flag) {
-                [self traverseDirectoryWithPath:namePath Block:block];
-            }
-            else {
-                block(namePath);
-            }
-        }
+    NSString *directoryPath = [path stringByDeletingLastPathComponent];
+    BOOL isDirectory = NO;
+    [[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:&isDirectory];
+    if (!isDirectory) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     }
-    else {
-        block(path);
-    }
+    [cachedData writeToFile:path atomically:YES];
 }
+
+- (NSData *)cachedDataForPath:(NSString *)path TimeoutInterval:(NSTimeInterval)timeoutInterval IsTimeout:(BOOL *)isTimeout;
+{
+    NSData *cachedData = [[NSData alloc] initWithContentsOfFile:path];
+    
+    if (!cachedData) {
+        return NULL;
+    }
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:true];
+#pragma clang diagnostic pop
+    NSDate *fileModificationDate = [fileAttributes valueForKey:NSFileModificationDate];
+    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:fileModificationDate];
+    *isTimeout = (timeInterval > timeoutInterval);
+    
+    return cachedData;
+}
+
+- (void)removeCachedDataForPath:(NSString *)path;
+{
+    if (![path length]) {
+        return;
+    }
+    [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+}
+
+
+#pragma mark 移除所有缓存
+
+- (void)removeAllMemoryCachedData;
+{
+    [_memoryCaches removeAllObjects];
+}
+
+- (void)removeAllDiskCachedData;
+{
+    [[NSFileManager defaultManager] removeItemAtPath:_diskPath error:NULL];
+}
+
+- (void)removeAllCachedData;
+{
+    [self removeAllMemoryCachedData];
+    [self removeAllDiskCachedData];
+}
+
 
 @end
+

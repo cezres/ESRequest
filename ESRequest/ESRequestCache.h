@@ -2,75 +2,133 @@
 //  ESRequestCache.h
 //  ESRequest
 //
-//  Created by 翟泉 on 16/4/11.
+//  Created by 翟泉 on 16/5/7.
 //  Copyright © 2016年 云之彼端. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "ESAPIConfigManager.h"
+
+@class ESRequest;
+
+//typedef NS_OPTIONS(NSInteger, RequestCacheOptions) {
+//
+//    RequestCacheMemory = 1 << 1,
+//
+//    RequestCacheDisk   = 1 << 2,
+//
+//};
 
 @interface ESRequestCache : NSObject
 
 /**
- *  缓存在硬盘的主目录
+ *  单位KB
  */
-@property (strong, nonatomic, nonnull) NSString *storeCachePath;
-/**
- *  当前硬盘缓存的字节
- */
-@property(assign, nonatomic, readonly) NSUInteger cacheSize;
-
+@property (assign, nonatomic) NSUInteger memoryCapacity;
 
 /**
- *  @return 返回ESNetWorkCache单例对象
+ *  单位KB
  */
-+ (nonnull ESRequestCache *)sharedInstance;
+@property (assign, nonatomic) NSUInteger diskCapacity;
+
+/**
+ *  当前使用的内存 KB
+ */
+@property (assign, nonatomic, readonly) NSUInteger currentMemoryUsage;
+
+/**
+ *  当前使用的硬盘空间 KB
+ */
+@property (assign, nonatomic, readonly) NSUInteger currentDiskUsage;
+
+/**
+ *  文件缓存路径
+ */
+@property (strong, nonatomic) NSString *diskPath;
+
+
++ (ESRequestCache *)sharedInstance;
+
+
+#pragma mark 缓存-Request
+
+/**
+ *  存储网络请求的返回JSON对象
+ *
+ *  @param request 网络请求对象
+ */
+- (void)storeCachedJSONObjectForRequest:(ESRequest *)request;
+
+/**
+ *  读取网络请求的缓存数据
+ *
+ *  @param request   网络请求对象
+ *  @param isTimeout 缓存数据是否超时
+ *
+ *  @return 缓存的JSON对象
+ */
+- (NSObject *)cachedJSONObjectForRequest:(ESRequest *)request IsTimeout:(BOOL *)isTimeout;
+
+/**
+ *  移除网络请求的缓存数据
+ *
+ *  @param request 网络请求对象
+ */
+- (void)removeCachedJSONObjectForRequest:(ESRequest *)request;
+
+/**
+ *  移除网络请求的缓存数据
+ *
+ *  @param type APIType
+ */
+- (void)removeCachedJSONObjectForAPIType:(APIType)type;
+
+#pragma mark 缓存-路径
 
 /**
  *  存储缓存数据
  *
- *  @param object 缓存数据
- *  @param token  唯一标识
- *  @param group  组
+ *  @param cachedData 缓存数据
+ *  @param path       缓存路径
  */
-- (void)storeCachedObject:(nonnull id)object Token:(nonnull NSString *)token Group:(nullable NSString *)group;
+- (void)storeCachedData:(NSData *)cachedData ForPath:(NSString *)path;
 
 /**
- *  获取缓存数据
+ *  读取缓存数据
  *
- *  @param token           唯一标识
- *  @param group           组
- *  @param timeoutInterval 超时时间  单位 分
- *  @param object          缓存对象
- *  @param flag            是否超时
- */
-- (void)cacheObjectForToken:(nonnull NSString *)token Group:(nullable NSString *)group TimeoutInterval:(NSTimeInterval)timeoutInterval object:( NSObject * _Nullable  __autoreleasing * _Nonnull)object flag:(BOOL * _Nonnull)flag;
-
-/**
- *  清除缓存数据
+ *  @param path            缓存路径
+ *  @param timeoutInterval 缓存超时时间
+ *  @param isTimeout       缓存是否超时
  *
- *  @param token 唯一标识
- *  @param group 组
+ *  @return 缓存数据
  */
-- (void)removeCacheObjectForToken:(nonnull NSString *)token Group:(nullable NSString *)group;
+- (NSData *)cachedDataForPath:(NSString *)path TimeoutInterval:(NSTimeInterval)timeoutInterval IsTimeout:(BOOL *)isTimeout;
 
 /**
- *  清除一组缓存数据
+ *  移除缓存
  *
- *  @param group 组
+ *  @param path 缓存路径
  */
-- (void)removeCacheObjectForGroup:(nonnull NSString *)group;
+- (void)removeCachedDataForPath:(NSString *)path;
+
+
+#pragma mark 移除所有缓存
 
 /**
- *  清除全部缓存
+ *  移除内存缓存
  */
-- (void)removeAllCache;
-
+- (void)removeAllMemoryCachedData;
 /**
- *  遍历目录
- *
- *  @param path  目录路径
- *  @param block 文件路径回调
+ *  移除硬盘缓存
  */
-- (void)traverseDirectoryWithPath:(nonnull NSString *)path Block:(void (^ _Nullable)(NSString * _Nullable path))block;
+- (void)removeAllDiskCachedData;
+/**
+ *  移除所有缓存
+ */
+- (void)removeAllCachedData;
+
 
 @end
+
+
+
