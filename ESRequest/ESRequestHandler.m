@@ -51,7 +51,9 @@
         }];
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         
-        self.HTTPSessionManager.requestSerializer.timeoutInterval = 10;
+        self.requestTimeoutInterval = 20;
+        
+        
     }
     return self;
 }
@@ -59,6 +61,11 @@
 - (NetworkReachabilityStatus)networkReachabilityStatus;
 {
     return _networkReachabilityStatus;
+}
+
+- (void)setRequestTimeoutInterval:(NSTimeInterval)requestTimeoutInterval; {
+    _requestTimeoutInterval = requestTimeoutInterval;
+    self.HTTPSessionManager.requestSerializer.timeoutInterval = _requestTimeoutInterval;
 }
 
 

@@ -14,7 +14,7 @@
 
 - (instancetype)initWithAPIType:(APIType)type; {
     if (self = [super init]) {
-        ESAPIConfig * config = [[ESAPIConfigManager sharedInstance] APIConfigForType:type];
+        ESAPIConfig * config = [ESAPIConfigManager APIConfigForType:type];
         NSAssert(config, ([NSString stringWithFormat:@"找不到API类型为%ld的配置", type]));
         _type = type;
         _URLString = [config URLString];

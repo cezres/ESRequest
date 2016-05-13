@@ -11,13 +11,6 @@
 
 @class ESRequest;
 
-//typedef NS_OPTIONS(NSInteger, RequestCacheOptions) {
-//
-//    RequestCacheMemory = 1 << 1,
-//
-//    RequestCacheDisk   = 1 << 2,
-//
-//};
 
 @interface ESRequestCache : NSObject
 
