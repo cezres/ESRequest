@@ -8,38 +8,61 @@
 
 /* Begin PBXBuildFile section */
 		4933A07CB5265E3359EFEF51 /* libPods-ESRequest-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41A8068B528538EB7FB50B72 /* libPods-ESRequest-Demo.a */; };
-		6E42D3BC1CE300BD0026D108 /* ProductInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E42D3BB1CE300BD0026D108 /* ProductInfoRequest.m */; };
+		6E026FDD1D3E14600038C2A0 /* ESRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6D63301CDDE08B00A41611 /* ESRequest.framework */; };
+		6E026FDE1D3E14600038C2A0 /* ESRequest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6D63301CDDE08B00A41611 /* ESRequest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E42D3C31CE356E60026D108 /* Products2 in Resources */ = {isa = PBXBuildFile; fileRef = 6E42D3BE1CE356E60026D108 /* Products2 */; };
 		6E42D3C41CE356E60026D108 /* Products3 in Resources */ = {isa = PBXBuildFile; fileRef = 6E42D3BF1CE356E60026D108 /* Products3 */; };
 		6E42D3C51CE356E60026D108 /* Products4 in Resources */ = {isa = PBXBuildFile; fileRef = 6E42D3C01CE356E60026D108 /* Products4 */; };
 		6E42D3C61CE356E60026D108 /* Products5 in Resources */ = {isa = PBXBuildFile; fileRef = 6E42D3C11CE356E60026D108 /* Products5 */; };
 		6E42D3C81CE358FB0026D108 /* Products1 in Resources */ = {isa = PBXBuildFile; fileRef = 6E42D3C71CE358FB0026D108 /* Products1 */; };
 		6E668D5A1CDF219000CF2BE5 /* NetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E668D591CDF219000CF2BE5 /* NetworkInfo.m */; };
-		6E6D63341CDDE08B00A41611 /* ESRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6D63331CDDE08B00A41611 /* ESRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E6D63431CDDE09E00A41611 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D63421CDDE09E00A41611 /* main.m */; };
 		6E6D63461CDDE09E00A41611 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D63451CDDE09E00A41611 /* AppDelegate.m */; };
 		6E6D63491CDDE09E00A41611 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D63481CDDE09E00A41611 /* ViewController.m */; };
 		6E6D634C1CDDE09E00A41611 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E6D634A1CDDE09E00A41611 /* Main.storyboard */; };
 		6E6D634E1CDDE09E00A41611 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E6D634D1CDDE09E00A41611 /* Assets.xcassets */; };
 		6E6D63511CDDE09E00A41611 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E6D634F1CDDE09E00A41611 /* LaunchScreen.storyboard */; };
-		6E6D63571CDDE0C600A41611 /* ESRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D63561CDDE0C600A41611 /* ESRequest.m */; };
-		6E6D635A1CDDE21A00A41611 /* ESRequestHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6D63581CDDE21A00A41611 /* ESRequestHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6E6D635B1CDDE21A00A41611 /* ESRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D63591CDDE21A00A41611 /* ESRequestHandler.m */; };
-		6E6D635E1CDDE27100A41611 /* ESRequestCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6D635C1CDDE27100A41611 /* ESRequestCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6E6D635F1CDDE27100A41611 /* ESRequestCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D635D1CDDE27100A41611 /* ESRequestCache.m */; };
-		6E6D63621CDDE32E00A41611 /* ESAPIConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6D63601CDDE32E00A41611 /* ESAPIConfigManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6E6D63631CDDE32E00A41611 /* ESAPIConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D63611CDDE32E00A41611 /* ESAPIConfigManager.m */; };
-		6E6D63641CDDE40800A41611 /* ESRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6D63301CDDE08B00A41611 /* ESRequest.framework */; };
 		6E6D636B1CDDF2A900A41611 /* HTTPServerDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E6D636A1CDDF2A900A41611 /* HTTPServerDemo.m */; };
+		6E89DA531D3DE5FF0055C9F2 /* Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E89DA511D3DE5FF0055C9F2 /* Request.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E89DA541D3DE5FF0055C9F2 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E89DA521D3DE5FF0055C9F2 /* Request.m */; };
+		6E89DA571D3DE6090055C9F2 /* RequestCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E89DA551D3DE6090055C9F2 /* RequestCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E89DA581D3DE6090055C9F2 /* RequestCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E89DA561D3DE6090055C9F2 /* RequestCache.m */; };
+		6E89DA5B1D3DE61F0055C9F2 /* RequestHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E89DA591D3DE61F0055C9F2 /* RequestHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E89DA5C1D3DE61F0055C9F2 /* RequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E89DA5A1D3DE61F0055C9F2 /* RequestHandler.m */; };
+		6E89DA641D3DFA6F0055C9F2 /* BaseRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E89DA621D3DFA6F0055C9F2 /* BaseRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E89DA651D3DFA6F0055C9F2 /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E89DA631D3DFA6F0055C9F2 /* BaseRequest.m */; };
+		6E89DA681D3E0FFF0055C9F2 /* ProductRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E89DA671D3E0FFF0055C9F2 /* ProductRequest.m */; };
 		7B85DBD2C7DD6070B8623C4E /* libPods-ESRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A2974A4369A3CF1FC97005 /* libPods-ESRequest.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6E026FDF1D3E14600038C2A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6E6D63271CDDE08B00A41611 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6E6D632F1CDDE08B00A41611;
+			remoteInfo = ESRequest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6E026FE11D3E14600038C2A0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6E026FDE1D3E14600038C2A0 /* ESRequest.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		11A2974A4369A3CF1FC97005 /* libPods-ESRequest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ESRequest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F056BF5621A0F54A96DDC82 /* Pods-ESRequest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ESRequest.release.xcconfig"; path = "Pods/Target Support Files/Pods-ESRequest/Pods-ESRequest.release.xcconfig"; sourceTree = "<group>"; };
 		41A8068B528538EB7FB50B72 /* libPods-ESRequest-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ESRequest-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E42D3BA1CE300BD0026D108 /* ProductInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductInfoRequest.h; sourceTree = "<group>"; };
-		6E42D3BB1CE300BD0026D108 /* ProductInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductInfoRequest.m; sourceTree = "<group>"; };
 		6E42D3BE1CE356E60026D108 /* Products2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Products2; sourceTree = "<group>"; };
 		6E42D3BF1CE356E60026D108 /* Products3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Products3; sourceTree = "<group>"; };
 		6E42D3C01CE356E60026D108 /* Products4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Products4; sourceTree = "<group>"; };
@@ -48,7 +71,6 @@
 		6E668D581CDF219000CF2BE5 /* NetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkInfo.h; sourceTree = "<group>"; };
 		6E668D591CDF219000CF2BE5 /* NetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkInfo.m; sourceTree = "<group>"; };
 		6E6D63301CDDE08B00A41611 /* ESRequest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ESRequest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E6D63331CDDE08B00A41611 /* ESRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESRequest.h; sourceTree = "<group>"; };
 		6E6D63351CDDE08B00A41611 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E6D633F1CDDE09E00A41611 /* ESRequest-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ESRequest-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E6D63421CDDE09E00A41611 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -60,15 +82,19 @@
 		6E6D634D1CDDE09E00A41611 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E6D63501CDDE09E00A41611 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6E6D63521CDDE09E00A41611 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6E6D63561CDDE0C600A41611 /* ESRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESRequest.m; sourceTree = "<group>"; };
-		6E6D63581CDDE21A00A41611 /* ESRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRequestHandler.h; sourceTree = "<group>"; };
-		6E6D63591CDDE21A00A41611 /* ESRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESRequestHandler.m; sourceTree = "<group>"; };
-		6E6D635C1CDDE27100A41611 /* ESRequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRequestCache.h; sourceTree = "<group>"; };
-		6E6D635D1CDDE27100A41611 /* ESRequestCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESRequestCache.m; sourceTree = "<group>"; };
-		6E6D63601CDDE32E00A41611 /* ESAPIConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESAPIConfigManager.h; sourceTree = "<group>"; };
-		6E6D63611CDDE32E00A41611 /* ESAPIConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESAPIConfigManager.m; sourceTree = "<group>"; };
 		6E6D63691CDDF2A900A41611 /* HTTPServerDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPServerDemo.h; sourceTree = "<group>"; };
 		6E6D636A1CDDF2A900A41611 /* HTTPServerDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPServerDemo.m; sourceTree = "<group>"; };
+		6E89DA511D3DE5FF0055C9F2 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
+		6E89DA521D3DE5FF0055C9F2 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
+		6E89DA551D3DE6090055C9F2 /* RequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestCache.h; sourceTree = "<group>"; };
+		6E89DA561D3DE6090055C9F2 /* RequestCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestCache.m; sourceTree = "<group>"; };
+		6E89DA591D3DE61F0055C9F2 /* RequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestHandler.h; sourceTree = "<group>"; };
+		6E89DA5A1D3DE61F0055C9F2 /* RequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestHandler.m; sourceTree = "<group>"; };
+		6E89DA611D3DE6C20055C9F2 /* ESRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESRequest.h; sourceTree = "<group>"; };
+		6E89DA621D3DFA6F0055C9F2 /* BaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRequest.h; sourceTree = "<group>"; };
+		6E89DA631D3DFA6F0055C9F2 /* BaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseRequest.m; sourceTree = "<group>"; };
+		6E89DA661D3E0FFF0055C9F2 /* ProductRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductRequest.h; sourceTree = "<group>"; };
+		6E89DA671D3E0FFF0055C9F2 /* ProductRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductRequest.m; sourceTree = "<group>"; };
 		70D85C516712045D8B00E94C /* Pods-ESRequest-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ESRequest-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ESRequest-Demo/Pods-ESRequest-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		8FF7E506B281D0DB6516B1BD /* Pods-ESRequest-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ESRequest-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ESRequest-Demo/Pods-ESRequest-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		DFF6BDA873446FC2A7514C5B /* Pods-ESRequest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ESRequest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ESRequest/Pods-ESRequest.debug.xcconfig"; sourceTree = "<group>"; };
@@ -87,7 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E6D63641CDDE40800A41611 /* ESRequest.framework in Frameworks */,
+				6E026FDD1D3E14600038C2A0 /* ESRequest.framework in Frameworks */,
 				4933A07CB5265E3359EFEF51 /* libPods-ESRequest-Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,14 +144,15 @@
 		6E6D63321CDDE08B00A41611 /* ESRequest */ = {
 			isa = PBXGroup;
 			children = (
-				6E6D63331CDDE08B00A41611 /* ESRequest.h */,
-				6E6D63561CDDE0C600A41611 /* ESRequest.m */,
-				6E6D63581CDDE21A00A41611 /* ESRequestHandler.h */,
-				6E6D63591CDDE21A00A41611 /* ESRequestHandler.m */,
-				6E6D635C1CDDE27100A41611 /* ESRequestCache.h */,
-				6E6D635D1CDDE27100A41611 /* ESRequestCache.m */,
-				6E6D63601CDDE32E00A41611 /* ESAPIConfigManager.h */,
-				6E6D63611CDDE32E00A41611 /* ESAPIConfigManager.m */,
+				6E89DA611D3DE6C20055C9F2 /* ESRequest.h */,
+				6E89DA511D3DE5FF0055C9F2 /* Request.h */,
+				6E89DA521D3DE5FF0055C9F2 /* Request.m */,
+				6E89DA551D3DE6090055C9F2 /* RequestCache.h */,
+				6E89DA561D3DE6090055C9F2 /* RequestCache.m */,
+				6E89DA591D3DE61F0055C9F2 /* RequestHandler.h */,
+				6E89DA5A1D3DE61F0055C9F2 /* RequestHandler.m */,
+				6E89DA621D3DFA6F0055C9F2 /* BaseRequest.h */,
+				6E89DA631D3DFA6F0055C9F2 /* BaseRequest.m */,
 				6E6D63351CDDE08B00A41611 /* Info.plist */,
 			);
 			path = ESRequest;
@@ -139,6 +166,8 @@
 				6E42D3BF1CE356E60026D108 /* Products3 */,
 				6E42D3C01CE356E60026D108 /* Products4 */,
 				6E42D3C11CE356E60026D108 /* Products5 */,
+				6E89DA661D3E0FFF0055C9F2 /* ProductRequest.h */,
+				6E89DA671D3E0FFF0055C9F2 /* ProductRequest.m */,
 				6E668D581CDF219000CF2BE5 /* NetworkInfo.h */,
 				6E668D591CDF219000CF2BE5 /* NetworkInfo.m */,
 				6E6D63691CDDF2A900A41611 /* HTTPServerDemo.h */,
@@ -152,8 +181,6 @@
 				6E6D634F1CDDE09E00A41611 /* LaunchScreen.storyboard */,
 				6E6D63521CDDE09E00A41611 /* Info.plist */,
 				6E6D63411CDDE09E00A41611 /* Supporting Files */,
-				6E42D3BA1CE300BD0026D108 /* ProductInfoRequest.h */,
-				6E42D3BB1CE300BD0026D108 /* ProductInfoRequest.m */,
 			);
 			path = "ESRequest-Demo";
 			sourceTree = "<group>";
@@ -193,10 +220,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E6D63341CDDE08B00A41611 /* ESRequest.h in Headers */,
-				6E6D63621CDDE32E00A41611 /* ESAPIConfigManager.h in Headers */,
-				6E6D635E1CDDE27100A41611 /* ESRequestCache.h in Headers */,
-				6E6D635A1CDDE21A00A41611 /* ESRequestHandler.h in Headers */,
+				6E89DA531D3DE5FF0055C9F2 /* Request.h in Headers */,
+				6E89DA641D3DFA6F0055C9F2 /* BaseRequest.h in Headers */,
+				6E89DA571D3DE6090055C9F2 /* RequestCache.h in Headers */,
+				6E89DA5B1D3DE61F0055C9F2 /* RequestHandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,10 +260,12 @@
 				6E6D633D1CDDE09E00A41611 /* Resources */,
 				88E2817D68105403512B72B5 /* Embed Pods Frameworks */,
 				3EC49F23DF7A361A45BC0ED6 /* Copy Pods Resources */,
+				6E026FE11D3E14600038C2A0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6E026FE01D3E14600038C2A0 /* PBXTargetDependency */,
 			);
 			name = "ESRequest-Demo";
 			productName = "ESRequest-Demo";
@@ -387,10 +416,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E6D635B1CDDE21A00A41611 /* ESRequestHandler.m in Sources */,
-				6E6D63571CDDE0C600A41611 /* ESRequest.m in Sources */,
-				6E6D63631CDDE32E00A41611 /* ESAPIConfigManager.m in Sources */,
-				6E6D635F1CDDE27100A41611 /* ESRequestCache.m in Sources */,
+				6E89DA5C1D3DE61F0055C9F2 /* RequestHandler.m in Sources */,
+				6E89DA651D3DFA6F0055C9F2 /* BaseRequest.m in Sources */,
+				6E89DA581D3DE6090055C9F2 /* RequestCache.m in Sources */,
+				6E89DA541D3DE5FF0055C9F2 /* Request.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,12 +431,20 @@
 				6E6D63461CDDE09E00A41611 /* AppDelegate.m in Sources */,
 				6E668D5A1CDF219000CF2BE5 /* NetworkInfo.m in Sources */,
 				6E6D63431CDDE09E00A41611 /* main.m in Sources */,
+				6E89DA681D3E0FFF0055C9F2 /* ProductRequest.m in Sources */,
 				6E6D636B1CDDF2A900A41611 /* HTTPServerDemo.m in Sources */,
-				6E42D3BC1CE300BD0026D108 /* ProductInfoRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6E026FE01D3E14600038C2A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6E6D632F1CDDE08B00A41611 /* ESRequest */;
+			targetProxy = 6E026FDF1D3E14600038C2A0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6E6D634A1CDDE09E00A41611 /* Main.storyboard */ = {

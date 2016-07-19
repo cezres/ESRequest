@@ -14,6 +14,5 @@ s.requires_arc = true
 s.public_header_files = 'ESRequest/*.h'
 
 s.dependency 'AFNetworking', '~> 3.0'
-s.dependency 'MBProgressHUD'
 
 end

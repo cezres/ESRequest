@@ -7,27 +7,19 @@
 //
 
 #import "ViewController.h"
-#import <ESRequest/ESRequest.h>
 #import <HTTPServer.h>
 #import "HTTPServerDemo.h"
 #import "NetworkInfo.h"
 
-// ESRequest Test
-#import "ProductInfoRequest.h"
 
-typedef NS_ENUM(APIType, APIType__) {
-    APITypeHomeModuleIndex = 100,
-    APITypeHomeModuleContent,
-    
-    APITypeMemberLogin = 200,
-    
-    APITypeProductList = 300,
-};
+
+#import "ESRequest.h"
+
+#import "ProductRequest.h"
 
 
 
 @interface ViewController ()
-<ESRequestDelegate>
 {
     HTTPServer *server;
     UIActivityIndicatorView *activityIndicatorView;
@@ -45,18 +37,12 @@ typedef NS_ENUM(APIType, APIType__) {
     
     activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    
-    
     server = [[HTTPServer alloc] init];
     [server setType:@"_http._tcp."];
     [server setConnectionClass:[HTTPServerDemo class]];
     
     [server setPort:22333];
-    [server setInterface:[NetworkInfo IPAddress]];
-    
-    
-    NSLog(@"%@", [NetworkInfo IPAddress]);
-    
+    [server setInterface:[NetworkInfo WiFiIPAddress]];
     
     NSError *error;
     if (![server start:&error]) {
@@ -64,67 +50,33 @@ typedef NS_ENUM(APIType, APIType__) {
         return;
     }
     
+    [RequestHandler sharedInstance].baseURLString = [NSString stringWithFormat:@"http://%@:22333", [NetworkInfo WiFiIPAddress]];
     
     
     
-    [ESAPIConfigManager sharedInstance].baseURLString = [NSString stringWithFormat:@"http://%@:22333", [NetworkInfo IPAddress]];
+    
+//    [[ProductRequest requestWithCompletionBlock:^(Request *request) {
+//        if (request.responseObject) {
+////            NSLog(@"%@", request.responseObject);
+//        }
+//    }] resume];
     
     
-    [[ESAPIConfigManager sharedInstance] addAPIType:APITypeHomeModuleIndex withURLString:@"/api/page/index/MAIN" Method:HTTPMethodGet CacheTimeoutInterval:120];
-    
-    [[ESAPIConfigManager sharedInstance] addAPIType:APITypeHomeModuleContent withURLString:@"/api/page/module/%%id%%" Method:HTTPMethodGet];
-    
-    [[ESAPIConfigManager sharedInstance] addAPIType:APITypeMemberLogin withURLString:@"/member/login" Method:HTTPMethodPost];
-    
-    [[ESAPIConfigManager sharedInstance] addAPIType:APITypeProductList withURLString:@"product/list" Method:HTTPMethodGet];
-    
-    
-//    [[ESRequest RequestWithAPIType:APITypeHomeModuleIndex parameters:NULL delegate:self] start];
-    
-//    [[ESRequest RequestWithAPIType:APITypeHomeModuleContent parameters:@{@"id":@40} delegate:self] start];
-    
-//    [[[ProductInfoRequest alloc] initWithProductId:159] start];
-    
-    [[ESRequest RequestWithAPIType:APITypeProductList parameters:@{@"p": @1} delegate:self] start];
-    
-    
-    
-}
-
-
-
-#pragma mark - ESRequestDelegate
-
-- (void)willStartRequest:(ESRequest *)request; {
-    self.navigationItem.titleView = activityIndicatorView;
-    [activityIndicatorView startAnimating];
-}
-
-- (void)requestCompletion:(ESRequest *)request;
-{
-    [activityIndicatorView stopAnimating];
-    
-    if (request.error) {
-        NSLog(@"%@", [request.error.userInfo objectForKey:NSLocalizedDescriptionKey]);
-        return;
-    }
-    
-    NSLog(@"%@", request.responseObject);
-    
-    
-    if (request.type == APITypeProductList) {
-        
-        if (request.next) {
-            if (request.index == 5) {
-                return;
-            }
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [request nextPage];
-            });
-            
+    Request *request = [Request requestWithCompletionBlock:^(Request *request) {
+        if (request.responseObject) {
+            NSLog(@"%@", request.responseObject);
         }
-        
-    }
+    }];
+    request.URLString = @"/product/%%id%%";
+    request.parameters = @{@"id": @3727026};
+    request.method = HTTPMethodGet;
+    request.cacheTimeoutInterval = 60*10;
+    [request resume];
+    
+    
+    
+    
+    
 }
 
 
