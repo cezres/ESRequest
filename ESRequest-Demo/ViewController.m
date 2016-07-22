@@ -55,14 +55,10 @@
     
     
     
-//    [[ProductRequest requestWithCompletionBlock:^(Request *request) {
-//        if (request.responseObject) {
-////            NSLog(@"%@", request.responseObject);
-//        }
-//    }] resume];
-    
     [[ProductRequest request] startWithCompletionBlock:^(__kindof Request *request) {
-        
+        if (request.responseObject) {
+            NSLog(@"%@", request.responseObject);
+        }
     }];
     
     Request *request = [Request request];
