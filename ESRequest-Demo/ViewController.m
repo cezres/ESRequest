@@ -61,17 +61,18 @@
 //        }
 //    }] resume];
     
-    
-    Request *request = [Request requestWithCompletionBlock:^(Request *request) {
-        if (request.responseObject) {
-            NSLog(@"%@", request.responseObject);
-        }
+    [[ProductRequest request] startWithCompletionBlock:^(__kindof Request *request) {
+        
     }];
-    request.URLString = @"/product/%%id%%";
+    
+    Request *request = [Request request];
+    request.URLString = @"/product/##id##";
     request.parameters = @{@"id": @3727026};
     request.method = HTTPMethodGet;
     request.cacheTimeoutInterval = 60*10;
-    [request resume];
+    [request startWithCompletionBlock:^(__kindof Request *request) {
+        NSLog(@"%@", request.responseObject);
+    }];
     
     
     

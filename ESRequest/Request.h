@@ -58,19 +58,21 @@
 
 @property (weak, nonatomic) id<RequestDelegate> delegate;
 
-@property (copy, nonatomic) void (^completionBlock)(Request * request);
+@property (copy, nonatomic) void (^completionBlock)(__kindof Request * request);
 
 
-+ (instancetype)requestWithDelegate:(id<RequestDelegate>)delegate;
-
-+ (instancetype)requestWithCompletionBlock:(void (^)(Request *request))completionBlock;
++ (instancetype)request;
 
 
-- (void)resume;
+- (void)startWithDelegate:(id<RequestDelegate>)delegate;
 
-- (void)suspend;
+- (void)startWithCompletionBlock:(void (^)(__kindof Request *request))completionBlock;
 
-- (void)cancel;
+- (void)start;
+
+- (void)pause;
+
+- (void)stop;
 
 
 

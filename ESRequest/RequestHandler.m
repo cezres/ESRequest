@@ -71,7 +71,7 @@
 #pragma mark get / set
 
 - (NetworkReachabilityStatus)networkReachabilityStatus; {
-    return [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+    return (NetworkReachabilityStatus)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
 }
 
 - (void)setTimeoutInterval:(NSTimeInterval)timeoutInterval {
