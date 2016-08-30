@@ -5,15 +5,9 @@ platform :ios, '7.0'
 target 'ESRequest' do
 
     pod 'AFNetworking', '~> 3'
+    
+    pod 'MBProgressHUD'
 
 end
 
-
-target 'ESRequest-Demo' do
-    
-#    pod 'AFNetworking', '~> 3'
-
-    pod 'CocoaHTTPServer'
-    
-end
 

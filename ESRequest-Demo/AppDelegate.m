@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "HTTPServerDemo.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,7 +19,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-//    [HTTPServerDemo start];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    self.window.rootViewController = [[ViewController alloc] init];
+    
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[UIViewController alloc] init]];
+    [navController pushViewController:[[ViewController alloc] init] animated:YES];
+    self.window.rootViewController = navController;
+    
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

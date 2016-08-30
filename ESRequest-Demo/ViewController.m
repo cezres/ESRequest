@@ -7,72 +7,59 @@
 //
 
 #import "ViewController.h"
-#import <HTTPServer.h>
-#import "HTTPServerDemo.h"
-#import "NetworkInfo.h"
-
-
 
 #import "ESRequest.h"
-
-#import "ProductRequest.h"
-
-
+#import "BaseRequest.h"
 
 @interface ViewController ()
-{
-    HTTPServer *server;
-    UIActivityIndicatorView *activityIndicatorView;
-}
+
+@property (strong, nonatomic) BaseRequest *request;
+
 @end
 
 
 @implementation ViewController
+
+- (void)dealloc {
+    NSLog(@"%s", __FUNCTION__);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"Test";
-    
-    activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    
-    server = [[HTTPServer alloc] init];
-    [server setType:@"_http._tcp."];
-    [server setConnectionClass:[HTTPServerDemo class]];
-    
-    [server setPort:22333];
-    [server setInterface:[NetworkInfo WiFiIPAddress]];
-    
-    NSError *error;
-    if (![server start:&error]) {
-        NSLog(@"%@", error);
-        return;
-    }
-    
-    [RequestHandler sharedInstance].baseURLString = [NSString stringWithFormat:@"http://%@:22333", [NetworkInfo WiFiIPAddress]];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     
-    
-    
-    [[ProductRequest request] startWithCompletionBlock:^(__kindof Request *request) {
+    _request = [BaseRequest requestWithLoadingInView:self.view];
+    _request.URLString = @"http://open.api.d2cmall.com/v2/api/product/list";
+    _request.parameters = @{@"c": @1687, @"t": @1, @"p": @1, @"pageSize": @2};
+    [_request startWithCompletionBlock:^(__kindof ESRequest *request) {
         if (request.responseObject) {
-            NSLog(@"%@", request.responseObject);
+            NSLog(@"\n%@", request.responseObject);
+        }
+        NSLog(@"%@", self);
+    }];
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_request startNextPage];
+    });
+    
+   
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    BaseRequest *request = [BaseRequest requestWithLoadingInView:self.view];
+    request.URLString = @"http://test.api.d2cmall.com/v2/api/page/index/MAIN";
+    request.parameters = @{};
+    [request startWithCompletionBlock:^(__kindof ESRequest *request) {
+        if (request.responseObject) {
+            NSLog(@"\n%@", request.responseObject);
         }
     }];
-    
-    Request *request = [Request request];
-    request.URLString = @"/product/##id##";
-    request.parameters = @{@"id": @3727026};
-    request.method = HTTPMethodGet;
-    request.cacheTimeoutInterval = 60*10;
-    [request startWithCompletionBlock:^(__kindof Request *request) {
-        NSLog(@"%@", request.responseObject);
-    }];
-    
-    
-    
-    
     
 }
 
