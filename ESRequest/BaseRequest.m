@@ -45,6 +45,15 @@
     [_loadingView hide:YES];
 }
 
+- (BaseRequest *)startNextPageWithDelegate:(id<RequestDelegate>)delegate {
+    self.delegate = delegate;
+    return [self startNextPage];
+}
+
+- (BaseRequest *)startNextPageWithCompletionBlock:(ESRequestCompletionBlock)completionBlock {
+    self.completionBlock = completionBlock;
+    return [self startNextPage];
+}
 
 - (BaseRequest *)startNextPage {
     if (!self.hasNext) {
@@ -64,7 +73,7 @@
     if (!self.responseObject) {
         return -1;
     }
-    else if (![self.responseObject isMemberOfClass:[NSDictionary class]]) {
+    else if (![self.responseObject isKindOfClass:[NSDictionary class]]) {
         return -1;
     }
     else if ([self.pageKeyPath length] == 0) {

@@ -57,7 +57,13 @@
 /**
  *  加载下一页数据
  */
+- (__kindof BaseRequest *)startNextPageWithDelegate:(id<RequestDelegate>)delegate;
+
+- (__kindof BaseRequest *)startNextPageWithCompletionBlock:(ESRequestCompletionBlock)completionBlock;
+
 - (__kindof BaseRequest *)startNextPage;
+
+
 
 
 
