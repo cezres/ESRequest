@@ -14,7 +14,11 @@
 @protocol RequestDelegate <NSObject>
 
 @optional
-
+/**
+ *  请求完成后回调
+ *
+ *  @param request <#request description#>
+ */
 - (void)requestCompletion:(__kindof ESRequest *)request;
 
 @end
@@ -30,29 +34,43 @@ typedef void (^ESRequestCompletionBlock)(__kindof ESRequest *request);
 @property (copy, nonatomic) NSString *URLString;
 
 @property (assign, nonatomic) ESHTTPMethod method;
-
+/**
+ *  参数
+ */
 @property (copy, nonatomic) NSObject *parameters;
-
+/**
+ *  必须从网络获取数据
+ */
 @property (assign, nonatomic) BOOL mustFromNetwork;
 
+@property (readonly) NSURLSessionTaskState state;
+
+@property (assign, nonatomic) NSInteger tag;
+
+#pragma mark Cache
+
+/**
+ *  缓存时间，0不缓存
+ */
 @property (assign, nonatomic) NSTimeInterval cacheTimeoutInterval;
-
-
-
+/**
+ *  缓存-组名称 默认MD5(URLString)
+ */
 @property (copy, nonatomic, readonly) NSString *groupName;
-
+/**
+ *  缓存-标识  MD5(parameters)
+ */
 @property (copy, nonatomic, readonly) NSString *identifier;
 
 
-@property (readonly) NSURLSessionTaskState state;
+#pragma mark Response
 
 @property (strong, nonatomic, readonly) id responseObject;
 
 @property (strong, nonatomic, readonly) NSError *error;
 
 
-@property (assign, nonatomic) NSInteger tag;
-
+#pragma mark Callback
 
 @property (weak, nonatomic) id<RequestDelegate> delegate;
 /**

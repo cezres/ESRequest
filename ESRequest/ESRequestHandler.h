@@ -24,6 +24,12 @@ typedef NS_ENUM(NSInteger, ESNetworkReachabilityStatus) {
 
 @protocol ESRequestHandlerDelegate <NSObject>
 
+/**
+ *  请求完成后回调
+ *
+ *  @param responseObject <#responseObject description#>
+ *  @param error          <#error description#>
+ */
 - (void)requestHandleCompletionResponseObject:(id)responseObject error:(NSError *)error;
 
 @end
@@ -32,8 +38,13 @@ typedef NS_ENUM(NSInteger, ESNetworkReachabilityStatus) {
 
 @interface ESRequestHandler : NSObject
 
+/**
+ *  网络状态
+ */
 @property (readonly, nonatomic, assign) ESNetworkReachabilityStatus networkReachabilityStatus;
-
+/**
+ *  请求超时时间
+ */
 @property (assign, nonatomic) NSTimeInterval timeoutInterval;
 
 @property (strong, nonatomic) NSString *baseURLString;
